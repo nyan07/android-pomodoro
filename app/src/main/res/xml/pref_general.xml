@@ -1,0 +1,39 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/pref_header_general">
+
+        <ListPreference
+            android:defaultValue="25"
+            android:entries="@array/pref_pomodoro_interval_titles"
+            android:entryValues="@array/pref_pomodoro_interval_values"
+            android:key="pomodoro_interval"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_pomodoro_interval"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_header_notifications">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="notifications_pomodoro_sound"
+            android:title="@string/pref_title_sound_notifications"/>
+
+        <RingtonePreference
+            android:defaultValue="content://settings/system/notification_sound"
+            android:dependency="notifications_pomodoro_sound"
+            android:key="notifications_pomodoro_ringtone"
+            android:ringtoneType="notification"
+            android:title="@string/pref_title_ringtone"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="notifications_pomodoro_vibrate"
+            android:title="@string/pref_title_vibrate"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

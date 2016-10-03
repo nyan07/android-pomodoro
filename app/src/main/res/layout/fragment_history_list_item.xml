@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/list_item_vertical_padding"
+    android:paddingBottom="@dimen/list_item_vertical_padding"
+    android:paddingLeft="@dimen/list_item_horizontal_padding"
+    android:paddingRight="@dimen/list_item_horizontal_padding">
+
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        tools:src="@drawable/ic_alarm_on_black_24dp"
+        android:layout_marginRight="@dimen/list_icon_right_margin"
+        android:tint="@color/colorAccent"
+        />
+
+    <TextView
+        android:id="@+id/total_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/status"
+        android:layout_centerVertical="true"
+        tools:text="25:00"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:textSize="60sp"
+        android:fontFamily="sans-serif-thin" />
+
+    <TextView
+        android:id="@+id/started_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        style="@style/TextAppearance.AppCompat.Small"
+        tools:text="3 mins ago"/>
+
+</RelativeLayout>
