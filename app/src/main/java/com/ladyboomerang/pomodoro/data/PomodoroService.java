@@ -6,20 +6,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class PomodoroService
 {
-    private static PomodoroService instance;
     private List<IPomodoroServiceListener> listeners;
 
-    public static PomodoroService getInstance()
-    {
-        if (instance == null){
-            instance = new PomodoroService();
-        }
-        return instance;
-    }
-
-    private PomodoroService(){}
+    public PomodoroService(){}
 
     public Pomodoro start()
     {

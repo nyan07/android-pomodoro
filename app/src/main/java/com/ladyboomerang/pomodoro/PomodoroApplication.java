@@ -1,19 +1,21 @@
 package com.ladyboomerang.pomodoro;
 
-import com.ladyboomerang.pomodoro.model.Pomodoro;
+import com.ladyboomerang.pomodoro.data.ServiceModule;
 import com.orm.SugarApp;
 import com.orm.SugarContext;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
 public class PomodoroApplication extends SugarApp
 {
-    @Override
-    public void onCreate()
-    {
+    private ApplicationComponent applicationComponent;
+
+    @Override public void onCreate() {
         super.onCreate();
+        applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .serviceModule(new ServiceModule())
+                .build();
+
+
         SugarContext.init(this);
    }
 
@@ -22,5 +24,10 @@ public class PomodoroApplication extends SugarApp
     {
         super.onTerminate();
         SugarContext.terminate();
+    }
+
+    public ApplicationComponent component()
+    {
+        return applicationComponent;
     }
 }

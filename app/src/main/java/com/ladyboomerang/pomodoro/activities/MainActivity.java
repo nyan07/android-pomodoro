@@ -14,12 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ladyboomerang.pomodoro.PomodoroApplication;
 import com.ladyboomerang.pomodoro.R;
 import com.ladyboomerang.pomodoro.fragments.HistoryFragment;
 import com.ladyboomerang.pomodoro.fragments.PomodoroFragment;
 import com.ladyboomerang.pomodoro.model.Pomodoro;
 import com.ladyboomerang.pomodoro.data.PomodoroService;
 import com.ladyboomerang.pomodoro.adapters.TabsPagerAdapter;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
         PomodoroService.IPomodoroServiceListener
@@ -28,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private TabLayout tabLayout;
     private FloatingActionButton fab;
     private SparseArray<Fragment> fragments;
-    private PomodoroService service;
+    @Inject PomodoroService service;
+
+    public MainActivity(){}
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        service = PomodoroService.getInstance();
+        ((PomodoroApplication) getApplication()).component().inject(this);
+
         service.addPomodoroServiceListener(this);
 
         setupViewPager();

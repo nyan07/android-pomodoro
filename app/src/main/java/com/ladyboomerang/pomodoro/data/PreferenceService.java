@@ -25,13 +25,14 @@ public class PreferenceService
 
     public static PreferenceService getInstance(Context context)
     {
-        if (instance == null){
+        if (instance == null)
+        {
             instance = new PreferenceService(context);
         }
         return instance;
     }
 
-    private PreferenceService(Context context)
+    public PreferenceService(Context context)
     {
         this.context = context;
     }

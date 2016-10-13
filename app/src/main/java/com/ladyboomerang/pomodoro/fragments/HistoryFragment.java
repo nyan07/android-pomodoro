@@ -10,20 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ladyboomerang.pomodoro.PomodoroApplication;
 import com.ladyboomerang.pomodoro.adapters.HistoryRecyclerViewAdapter;
 import com.ladyboomerang.pomodoro.data.PomodoroService;
 import com.ladyboomerang.pomodoro.R;
 import com.ladyboomerang.pomodoro.model.Pomodoro;
 import com.ladyboomerang.pomodoro.ui.DividerItemDecoration;
 
+import javax.inject.Inject;
+
 public class HistoryFragment extends Fragment implements PomodoroService.IPomodoroServiceListener
 {
-    private PomodoroService service;
+    @Inject PomodoroService service;
     private HistoryRecyclerViewAdapter adapter;
 
     public HistoryFragment()
     {
-        service = PomodoroService.getInstance();
     }
 
     public static HistoryFragment newInstance()
@@ -33,16 +35,12 @@ public class HistoryFragment extends Fragment implements PomodoroService.IPomodo
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_history_list, container, false);
+
+        ((PomodoroApplication) getActivity().getApplication()).component().inject(this);
 
         service.addPomodoroServiceListener(this);
         adapter = new HistoryRecyclerViewAdapter(service.getHistory());

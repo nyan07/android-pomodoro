@@ -1,5 +1,6 @@
 package com.ladyboomerang.pomodoro.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -21,16 +22,19 @@ import com.ladyboomerang.pomodoro.data.PreferenceService;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class SettingsActivity extends AppCompatPreferenceActivity
 {
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
+    @Inject PreferenceService preferenceService;
+
+    private Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
             new Preference.OnPreferenceChangeListener()
             {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object value)
                 {
-                    PreferenceService.getInstance(preference.getContext())
-                            .setPreference(preference.getKey(), value);
+                    preferenceService.setPreference(preference.getKey(), value);
 
                     String stringValue = value.toString();
 
@@ -72,7 +76,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                 }
             };
 
-    private static void bindPreferenceSummaryToValue(Preference preference)
+    private void bindPreferenceSummaryToValue(Preference preference)
     {
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
@@ -104,8 +108,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                 new GeneralPreferenceFragment()).commit();
     }
 
-    public static class GeneralPreferenceFragment extends PreferenceFragment
+    public class GeneralPreferenceFragment extends PreferenceFragment
     {
+
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
@@ -125,6 +130,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                     PreferenceService.PREFERENCE_NOTIFICATIONS_POMODORO_VIBRATE));
 
             setHasOptionsMenu(true);
+        }
+
+        @Override
+        public void onAttach(Context context)
+        {
+            super.onAttach(context);
         }
 
         @Override

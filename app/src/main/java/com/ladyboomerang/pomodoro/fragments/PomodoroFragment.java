@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ladyboomerang.pomodoro.PomodoroApplication;
 import com.ladyboomerang.pomodoro.activities.MainActivity;
 import com.ladyboomerang.pomodoro.R;
 import com.ladyboomerang.pomodoro.data.PreferenceService;
@@ -16,17 +17,19 @@ import com.ladyboomerang.pomodoro.data.PomodoroService;
 import com.ladyboomerang.pomodoro.ui.CountDownTimerView;
 import com.ladyboomerang.pomodoro.utils.NotificationUtils;
 
+import javax.inject.Inject;
+
 public class PomodoroFragment extends Fragment implements MainActivity.IFloatingActionFragment,
         CountDownTimerView.ICountDownTimerViewListener, PreferenceService.IPreferenceServiceListener
 {
+    @Inject PomodoroService service;
+    @Inject PreferenceService preferences;
+
     private Pomodoro pomodoro;
-    private PomodoroService service;
     private CountDownTimerView timerView;
-    private PreferenceService preferences;
 
     public PomodoroFragment()
     {
-        service = PomodoroService.getInstance();
     }
 
     public static PomodoroFragment newInstance()
@@ -72,6 +75,8 @@ public class PomodoroFragment extends Fragment implements MainActivity.IFloating
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_pomodoro, container, false);
+
+        ((PomodoroApplication) getActivity().getApplication()).component().inject(this);
 
         timerView = (CountDownTimerView) view.findViewById(R.id.timer_front);
         timerView.setElapsedTime(preferences.getPomodoroInterval());
